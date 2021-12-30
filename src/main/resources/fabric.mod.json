@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "orcinus",
+  "version": "${version}",
+  "name": "Orcinus",
+  "description": "This is a fabric port of the hedgehogs mod",
+  "authors": [
+    "Orcinus"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/orcinus/icon.png",
+  "accessWidener": "hedgehog.accesswidener",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "net.orcinus.hedgehog.client.HedgehogClient"
+    ],
+    "main": [
+      "net.orcinus.hedgehog.Hedgehog"
+    ]
+  },
+  "mixins": [
+    "orcinus.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.12.12",
+    "fabric": "*",
+    "minecraft": "1.18.1"
+  }
+}
