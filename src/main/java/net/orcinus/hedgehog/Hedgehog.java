@@ -6,21 +6,16 @@ import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 import net.minecraft.village.TradeOffer;
-import net.minecraft.village.TradeOffers;
 import net.minecraft.world.biome.BiomeKeys;
 import net.orcinus.hedgehog.entities.HedgehogEntity;
 import net.orcinus.hedgehog.init.HBlocks;
 import net.orcinus.hedgehog.init.HEntities;
 import net.orcinus.hedgehog.init.HItems;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Random;
 
 public class Hedgehog implements ModInitializer {
     public static final String MODID = "hedgehog";
@@ -47,6 +42,7 @@ public class Hedgehog implements ModInitializer {
          * Registers Entity Spawnings with Fabric API
          */
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.MEADOW), SpawnGroup.CREATURE, HEntities.HEDGEHOG, 12, 1, 3);
+
     }
 
     public static Identifier ID(String name) {

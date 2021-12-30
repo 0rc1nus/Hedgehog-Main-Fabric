@@ -4,7 +4,6 @@ import com.google.common.collect.Maps;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.control.LookControl;
 import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.ai.goal.PounceAtTargetGoal;
@@ -54,14 +53,11 @@ import net.minecraft.util.DyeColor;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TimeHelper;
 import net.minecraft.util.Util;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
 import net.minecraft.world.event.GameEvent;
 import net.orcinus.hedgehog.entities.ai.hedgehog.HedgehogAfraidOfSkullGoal;
 import net.orcinus.hedgehog.entities.ai.hedgehog.HedgehogBegGoal;
@@ -81,7 +77,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.UUID;
 
 public class HedgehogEntity extends TameableEntity implements Angerable {
