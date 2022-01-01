@@ -26,7 +26,7 @@ public class HedgehogRenderer extends MobEntityRenderer<HedgehogEntity, EntityMo
     private final EntityModel<HedgehogEntity> normal = this.getModel();
 
     public HedgehogRenderer(EntityRendererFactory.Context context) {
-        super(context, new HedgehogModel<>(context.getPart(HModelLayers.HEDGEHOG)), 0.4F);
+        super(context, new HedgehogModel<>(context.getPart(HModelLayers.HEDGEHOG)), 0.3F);
         this.scared = new HedgehogScaredModel<>(context.getPart(HModelLayers.HEDGEHOG_SCARED));
         this.addFeature(new HedgehogClothLayer(this, context.getModelLoader()));
     }
@@ -37,6 +37,9 @@ public class HedgehogRenderer extends MobEntityRenderer<HedgehogEntity, EntityMo
             this.model = this.scared;
         } else {
             this.model = this.normal;
+        }
+        if (mobEntity.isInSittingPose()) {
+            matrixStack.translate(0.0d, -0.04d, 0.0d);
         }
         super.render(mobEntity, f, g, matrixStack, vertexConsumerProvider, i);
     }

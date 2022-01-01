@@ -20,9 +20,9 @@ public class HModelLayers {
 
     public static void registerRenderers() {
         EntityRendererRegistry.register(HEntities.HEDGEHOG, HedgehogRenderer::new);
-        EntityModelLayerRegistry.registerModelLayer(HEDGEHOG, HedgehogModel::createBodyLayer);
-        EntityModelLayerRegistry.registerModelLayer(HEDGEHOG_DECOR, HedgehogModel::createBodyLayer);
-        EntityModelLayerRegistry.registerModelLayer(HEDGEHOG_SCARED, HedgehogScaredModel::createBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(HEDGEHOG, HedgehogModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(HEDGEHOG_DECOR, HedgehogModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(HEDGEHOG_SCARED, HedgehogScaredModel::getTexturedModelData);
     }
 
 }
