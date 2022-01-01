@@ -222,33 +222,72 @@ public class HedgehogModel<T extends HedgehogEntity> extends AnimalModel<T> {
 	public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
 		float speed = 2.0f;
 		float degree = 1.5f;
-		this.body.roll = MathHelper.cos(limbAngle * speed * 0.2F) * degree * 0.3F * limbDistance;
-		this.body.yaw = MathHelper.cos(-1.0F + limbAngle * speed * 0.2F) * degree * 0.3F * limbDistance;
-		this.body.pivotY = MathHelper.cos(limbAngle * speed * 0.4F) * degree * 0.75F * limbDistance + 20.025F;
-		this.left_ear.yaw = MathHelper.cos(limbAngle * speed * 0.2F) * degree * 0.4F * limbDistance - 0.8F;
-		this.right_ear.yaw = MathHelper.cos(limbAngle * speed * 0.2F) * degree * -0.4F * limbDistance + 0.8F;
-		this.snout.pitch = MathHelper.cos(animationProgress * speed * 0.6F) * degree * 0.2F * 0.25F;
-		this.left_hand.yaw = MathHelper.cos(limbAngle * speed * 0.4F) * degree * 0.8F * limbDistance;
-		this.right_hand.yaw = MathHelper.cos(limbAngle * speed * 0.4F) * degree * -0.8F * limbDistance;
-		this.left_hand.pivotZ = MathHelper.cos(-1.0F + limbAngle * speed * 0.4F) * degree * 0.5F * limbDistance - 2.0F;
-		this.right_hand.pivotZ = MathHelper.cos(-1.0F + limbAngle * speed * 0.4F) * degree * -0.5F * limbDistance - 2.0F;
-		this.left_foot.yaw = MathHelper.cos(limbAngle * speed * 0.4F) * degree * -0.8F * limbDistance;
-		this.right_foot.yaw = MathHelper.cos(limbAngle * speed * 0.4F) * degree * 0.8F * limbDistance;
-		this.left_foot.pivotZ = MathHelper.cos(-1.0F + limbAngle * speed * 0.4F) * degree * -0.5F * limbDistance + 1.5F;
-		this.right_foot.pivotZ = MathHelper.cos(-1.0F + limbAngle * speed * 0.4F) * degree * 0.5F * limbDistance + 1.5F;
-		this.spines_top1.pitch = MathHelper.cos(-1.0F + limbAngle * speed * 0.2F) * degree * 0.4F * limbDistance - 1.0F;
-		this.spines_top2.pitch = MathHelper.cos(limbAngle * speed * 0.2F) * degree * -0.4F * limbDistance - 1.0F;
-		this.spines_top3.pitch = MathHelper.cos(-4.0F + limbAngle * speed * 0.2F) * degree * 0.4F * limbDistance - 1.0F;
-		this.spines_right1.yaw = MathHelper.cos(-1.0F + limbAngle * speed * 0.2F) * degree * 0.4F * limbDistance + 1.0F;
-		this.spines_right2.yaw = MathHelper.cos(limbAngle * speed * 0.2F) * degree * -0.4F * limbDistance + 1.0F;
-		this.spines_right3.yaw = MathHelper.cos(-4.0F + limbAngle * speed * 0.2F) * degree * 0.4F * limbDistance + 1.0F;
-		this.spines_left1.yaw = MathHelper.cos(-1.0F + limbAngle * speed * 0.2F) * degree * 0.4F * limbDistance - 1.0F;
-		this.spines_left2.yaw = MathHelper.cos(limbAngle * speed * 0.2F) * degree * -0.4F * limbDistance - 1.0F;
-		this.spines_left3.yaw = MathHelper.cos(-4.0F + limbAngle * speed * 0.2F) * degree * 0.4F * limbDistance - 1.0F;
-		this.left_hand.pivotY = MathHelper.cos(limbAngle * speed * 0.4F) * degree * 0.5F * limbDistance + 23.0F;
-		this.right_hand.pivotY = MathHelper.cos(limbAngle * speed * 0.4F) * degree * -0.5F * limbDistance + 23.0F;
-		this.right_foot.pivotY = MathHelper.cos(limbAngle * speed * 0.4F) * degree * 0.5F * limbDistance + 23.005F;
-		this.left_foot.pivotY = MathHelper.cos(-3.0F + limbAngle * speed * 0.4F) * degree * 0.5F * limbDistance + 23.005F;
+		if (!entity.isTouchingWater()) {
+			this.body.roll = MathHelper.cos(limbAngle * speed * 0.2F) * degree * 0.3F * limbDistance;
+			this.body.yaw = MathHelper.cos(-1.0F + limbAngle * speed * 0.2F) * degree * 0.3F * limbDistance;
+			this.body.pivotY = MathHelper.cos(limbAngle * speed * 0.4F) * degree * 0.75F * limbDistance + 20.025F;
+			this.left_ear.yaw = MathHelper.cos(limbAngle * speed * 0.2F) * degree * 0.4F * limbDistance - 0.8F;
+			this.right_ear.yaw = MathHelper.cos(limbAngle * speed * 0.2F) * degree * -0.4F * limbDistance + 0.8F;
+			this.snout.pitch = MathHelper.cos(animationProgress * speed * 0.6F) * degree * 0.2F * 0.25F;
+			this.left_hand.yaw = MathHelper.cos(limbAngle * speed * 0.4F) * degree * 0.8F * limbDistance;
+			this.right_hand.yaw = MathHelper.cos(limbAngle * speed * 0.4F) * degree * -0.8F * limbDistance;
+			this.left_hand.pivotZ = MathHelper.cos(-1.0F + limbAngle * speed * 0.4F) * degree * 0.5F * limbDistance - 2.0F;
+			this.right_hand.pivotZ = MathHelper.cos(-1.0F + limbAngle * speed * 0.4F) * degree * -0.5F * limbDistance - 2.0F;
+			this.left_foot.yaw = MathHelper.cos(limbAngle * speed * 0.4F) * degree * -0.8F * limbDistance;
+			this.right_foot.yaw = MathHelper.cos(limbAngle * speed * 0.4F) * degree * 0.8F * limbDistance;
+			this.left_foot.pivotZ = MathHelper.cos(-1.0F + limbAngle * speed * 0.4F) * degree * -0.5F * limbDistance + 1.5F;
+			this.right_foot.pivotZ = MathHelper.cos(-1.0F + limbAngle * speed * 0.4F) * degree * 0.5F * limbDistance + 1.5F;
+			this.spines_top1.pitch = MathHelper.cos(-1.0F + limbAngle * speed * 0.2F) * degree * 0.4F * limbDistance - 1.0F;
+			this.spines_top2.pitch = MathHelper.cos(limbAngle * speed * 0.2F) * degree * -0.4F * limbDistance - 1.0F;
+			this.spines_top3.pitch = MathHelper.cos(-4.0F + limbAngle * speed * 0.2F) * degree * 0.4F * limbDistance - 1.0F;
+			this.spines_right1.yaw = MathHelper.cos(-1.0F + limbAngle * speed * 0.2F) * degree * 0.4F * limbDistance + 1.0F;
+			this.spines_right2.yaw = MathHelper.cos(limbAngle * speed * 0.2F) * degree * -0.4F * limbDistance + 1.0F;
+			this.spines_right3.yaw = MathHelper.cos(-4.0F + limbAngle * speed * 0.2F) * degree * 0.4F * limbDistance + 1.0F;
+			this.spines_left1.yaw = MathHelper.cos(-1.0F + limbAngle * speed * 0.2F) * degree * 0.4F * limbDistance - 1.0F;
+			this.spines_left2.yaw = MathHelper.cos(limbAngle * speed * 0.2F) * degree * -0.4F * limbDistance - 1.0F;
+			this.spines_left3.yaw = MathHelper.cos(-4.0F + limbAngle * speed * 0.2F) * degree * 0.4F * limbDistance - 1.0F;
+			this.left_hand.pivotY = MathHelper.cos(limbAngle * speed * 0.4F) * degree * 0.5F * limbDistance + 23.0F;
+			this.right_hand.pivotY = MathHelper.cos(limbAngle * speed * 0.4F) * degree * -0.5F * limbDistance + 23.0F;
+			this.right_foot.pivotY = MathHelper.cos(limbAngle * speed * 0.4F) * degree * 0.5F * limbDistance + 23.005F;
+			this.left_foot.pivotY = MathHelper.cos(-3.0F + limbAngle * speed * 0.4F) * degree * 0.5F * limbDistance + 23.005F;
+
+			this.left_hand.pitch = 0F;
+			this.right_hand.pitch = 0F;
+			this.right_foot.pitch = 0F;
+			this.left_foot.pitch = 0F;
+		} else  {
+			this.left_hand.pitch = 2.2F;
+			this.right_hand.pitch = 2.2F;
+
+			this.right_foot.pitch = MathHelper.cos(animationProgress * speed * 0.1F) * degree * 0.8F * 0.25F + 0.8F;
+			this.left_foot.pitch = MathHelper.cos(animationProgress * speed * 0.1F) * degree * -0.8F * 0.25F + 0.8F;
+			this.snout.pitch = MathHelper.cos(animationProgress * speed * 0.6F) * degree * 0.2F * 0.25F;
+			this.body.roll = MathHelper.cos(animationProgress * speed * 0.05F) * degree * 0.3F * 0.25F;
+			this.spines_top1.pitch = MathHelper.cos(-1.0F + animationProgress * speed * 0.2F) * degree * 0.4F * 0.25F - 1.0F;
+			this.spines_top2.pitch = MathHelper.cos(animationProgress * speed * 0.2F) * degree * -0.4F * 0.25F - 1.0F;
+			this.spines_top3.pitch = MathHelper.cos(-4.0F + animationProgress * speed * 0.2F) * degree * 0.4F * 0.25F - 1.0F;
+			this.spines_right1.yaw = MathHelper.cos(-1.0F + animationProgress * speed * 0.2F) * degree * 0.4F * 0.25F + 1.0F;
+			this.spines_right2.yaw = MathHelper.cos(animationProgress * speed * 0.2F) * degree * -0.4F * 0.25F + 1.0F;
+			this.spines_right3.yaw = MathHelper.cos(-4.0F + animationProgress * speed * 0.2F) * degree * 0.4F * 0.25F + 1.0F;
+			this.spines_left1.yaw = MathHelper.cos(-1.0F + animationProgress * speed * 0.2F) * degree * 0.4F * 0.25F - 1.0F;
+			this.spines_left2.yaw = MathHelper.cos(animationProgress * speed * 0.2F) * degree * -0.4F * 0.25F - 1.0F;
+			this.spines_left3.yaw = MathHelper.cos(-4.0F + animationProgress * speed * 0.2F) * degree * 0.4F * 0.25F - 1.0F;
+
+			this.body.yaw = 0F;
+			this.body.pivotY =20.0F;
+			this.left_hand.pivotY = 23.0F;
+			this.right_hand.pivotY = 23.0F;
+			this.right_foot.pivotY = 23.0F;
+			this.left_foot.pivotY = 23.0F;
+			this.left_hand.yaw = 0F;
+			this.right_hand.yaw = 0F;
+			this.left_hand.pivotZ = - 2.0F;
+			this.right_hand.pivotZ = - 2.0F;
+			this.left_foot.yaw = 0F;
+			this.right_foot.yaw = 0F;
+			this.left_foot.pivotZ = 1.5F;
+			this.right_foot.pivotZ = 1.5F;
+		}
 	}
 
 	@Override

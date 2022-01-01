@@ -9,6 +9,7 @@ import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3f;
 import net.orcinus.hedgehog.Hedgehog;
 import net.orcinus.hedgehog.client.models.HedgehogModel;
 import net.orcinus.hedgehog.client.models.HedgehogScaredModel;
@@ -29,6 +30,16 @@ public class HedgehogRenderer extends MobEntityRenderer<HedgehogEntity, EntityMo
         super(context, new HedgehogModel<>(context.getPart(HModelLayers.HEDGEHOG)), 0.3F);
         this.scared = new HedgehogScaredModel<>(context.getPart(HModelLayers.HEDGEHOG_SCARED));
         this.addFeature(new HedgehogClothLayer(this, context.getModelLoader()));
+    }
+
+    @Override
+    protected void setupTransforms(HedgehogEntity entity, MatrixStack matrices, float animationProgress, float bodyYaw, float tickDelta) {
+        super.setupTransforms(entity, matrices, animationProgress, bodyYaw, tickDelta);
+        if (entity.isTouchingWater()) {
+            matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(180.0F));
+            matrices.multiply(Vec3f.NEGATIVE_X.getDegreesQuaternion(20.0F));
+            matrices.translate(0.0D, -0.6D, -0.1D);
+        }
     }
 
     @Override
