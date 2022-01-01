@@ -7,9 +7,10 @@ import net.orcinus.hedgehog.Hedgehog;
 
 public class HSoundEvents {
     public static final SoundEvent ENTITY_HEDGEHOG_AMBIENT = hedgehog("ambient");
-    public static final SoundEvent ENTITY_HEDGEHOG_SCARED = hedgehog("scard");
+    public static final SoundEvent ENTITY_HEDGEHOG_SCARED = hedgehog("scared");
     public static final SoundEvent ENTITY_HEDGEHOG_HURT = hedgehog("hurt");
     public static final SoundEvent ENTITY_HEDGEHOG_DEATH = hedgehog("death");
+    public static final SoundEvent ENTITY_HEDGEHOG_EATING = hedgehog("eating");
     private static SoundEvent hedgehog(String id) {
         return entity("hedgehog", id);
     }

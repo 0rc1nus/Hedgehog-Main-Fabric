@@ -1,6 +1,7 @@
 package net.orcinus.hedgehog.entities;
 
 import com.google.common.collect.Maps;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -15,6 +16,7 @@ import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -48,17 +50,14 @@ import net.minecraft.potion.Potions;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.DyeColor;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TimeHelper;
-import net.minecraft.util.Util;
+import net.minecraft.util.*;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
+import net.orcinus.hedgehog.Hedgehog;
 import net.orcinus.hedgehog.entities.ai.hedgehog.HedgehogAfraidOfSkullGoal;
 import net.orcinus.hedgehog.entities.ai.hedgehog.HedgehogBegGoal;
 import net.orcinus.hedgehog.entities.ai.hedgehog.HedgehogBreedGoal;
@@ -73,6 +72,8 @@ import net.orcinus.hedgehog.entities.ai.hedgehog.HedgehogPanicGoal;
 import net.orcinus.hedgehog.entities.ai.hedgehog.HedgehogRandomLookAroundGal;
 import net.orcinus.hedgehog.init.HEntities;
 import net.orcinus.hedgehog.init.HItems;
+import net.orcinus.hedgehog.init.HSoundEvents;
+import net.orcinus.hedgehog.mixin.MobEntityInvoker;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -128,7 +129,7 @@ public class HedgehogEntity extends TameableEntity implements Angerable {
         this.goalSelector.add(4, new HedgehogEatSpiderEyeGoal(this));
         this.goalSelector.add(5, new PounceAtTargetGoal(this, 0.4F));
         this.goalSelector.add(6, new HedgehogMeleeAttackGoal(this, 1.0D, true));
-        this.goalSelector.add(7, new HedgehogFollowOwnerGoal(this, 1.0D, 10.0F, 2.0F, false));
+        this.goalSelector.add(7, new HedgehogFollowOwnerGoal(this, 1.3D, 10.0F, 2.0F, false));
         this.goalSelector.add(8, new HedgehogBreedGoal(this, 1.0D));
         this.goalSelector.add(9, new WanderAroundFarGoal(this, 1.0D));
         this.goalSelector.add(10, new HedgehogBegGoal(this, 8.0F));
@@ -157,26 +158,40 @@ public class HedgehogEntity extends TameableEntity implements Angerable {
     }
 
     @Override
+    public boolean damage(DamageSource source, float amount) {
+        if (!source.isMagic() && source.getSource() instanceof LivingEntity livingEntity) {
+            if (!source.isExplosive()) {
+                livingEntity.damage(DamageSource.mob(this), 1.0F);
+            }
+        }
+        return super.damage(source, amount);
+    }
+
+    @Override
     public SoundEvent getEatSound(ItemStack stack) {
-        return SoundEvents.ENTITY_FOX_EAT;
+        return HSoundEvents.ENTITY_HEDGEHOG_EATING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_FOX_AMBIENT;
+        if (this.dataTracker.get(SCARED_TICKS) > 0) {
+            return HSoundEvents.ENTITY_HEDGEHOG_SCARED;
+        }
+        return HSoundEvents.ENTITY_HEDGEHOG_AMBIENT;
+
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_AXOLOTL_HURT;
+        return HSoundEvents.ENTITY_HEDGEHOG_HURT;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_FOX_DEATH;
+        return HSoundEvents.ENTITY_HEDGEHOG_DEATH;
     }
 
     public DyeColor getBandColor() {
@@ -537,6 +552,7 @@ public class HedgehogEntity extends TameableEntity implements Angerable {
         }
     }
 
+
     @Override
     public boolean isBreedingItem(ItemStack stack) {
         return stack.getItem() == Items.APPLE || stack.getItem() == HItems.KIWI;
@@ -620,11 +636,34 @@ public class HedgehogEntity extends TameableEntity implements Angerable {
 
     @Override
     public boolean tryAttack(Entity target) {
-        boolean flag = target.damage(DamageSource.mob(this), (int)this.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE));
-        if (flag) {
-            this.applyDamageEffects(this, target);
+        float damage = (float)this.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE);
+        float g = (float)this.getAttributeValue(EntityAttributes.GENERIC_ATTACK_KNOCKBACK);
+        if (target instanceof LivingEntity) {
+            damage += EnchantmentHelper.getAttackDamage(this.getMainHandStack(), ((LivingEntity)target).getGroup());
+            g += (float)EnchantmentHelper.getKnockback(this);
         }
-        return flag;
+
+        int i = EnchantmentHelper.getFireAspect(this);
+        if (i > 0) {
+            target.setOnFireFor(i * 4);
+        }
+
+        boolean bl = target.damage(new EntityDamageSource(String.format("mob.%s", new Identifier(Hedgehog.MODID, "hedgehog")), this), damage); // custom damage source
+        if (bl) {
+            if (g > 0.0F && target instanceof LivingEntity) {
+                ((LivingEntity)target).takeKnockback(g * 0.5F, MathHelper.sin(this.getYaw() * 0.017453292F), -MathHelper.cos(this.getYaw() * 0.017453292F));
+                this.setVelocity(this.getVelocity().multiply(0.6D, 1.0D, 0.6D));
+            }
+
+            if (target instanceof PlayerEntity playerEntity) {
+                ((MobEntityInvoker) this).invoke_disablePlayerShield(playerEntity, this.getMainHandStack(), playerEntity.isUsingItem() ? playerEntity.getActiveItem() : ItemStack.EMPTY);
+            }
+
+            this.applyDamageEffects(this, target);
+            this.onAttacking(target);
+        }
+
+        return bl;
     }
 
     @Override
