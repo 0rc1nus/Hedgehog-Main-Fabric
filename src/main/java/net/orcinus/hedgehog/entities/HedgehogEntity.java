@@ -175,7 +175,7 @@ public class HedgehogEntity extends TameableEntity implements Angerable {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        if (this.dataTracker.get(SCARED_TICKS) > 0) {
+        if (this.getScaredTicks() > 0) {
             return HSoundEvents.ENTITY_HEDGEHOG_SCARED;
         }
         return HSoundEvents.ENTITY_HEDGEHOG_AMBIENT;

@@ -8,6 +8,8 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(MobEntity.class)
 public interface MobEntityInvoker {
+
     @Invoker("disablePlayerShield")
     void invoke_disablePlayerShield(PlayerEntity player, ItemStack mobStack, ItemStack playerStack);
+
 }
