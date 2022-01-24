@@ -13,7 +13,7 @@ public class FoxEntityMixin {
 
     @Inject(at = @At("HEAD"), method = "initGoals")
     public void initGoals(CallbackInfo ci) {
-        FoxEntity $this = FoxEntity.class.cast(this);
+        FoxEntity $this = (FoxEntity) (Object) this;
         $this.goalSelector.add(2, new ActiveTargetGoal<>($this, HedgehogEntity.class, true, (entity -> !entity.isBaby())) {
             @Override
             public boolean shouldContinue() {
