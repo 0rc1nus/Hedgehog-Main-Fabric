@@ -5,7 +5,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.orcinus.hedgehog.Hedgehog;
 
-public class HSoundEvents {
+public class HedgehogSoundEvents {
     public static final SoundEvent ENTITY_HEDGEHOG_AMBIENT = hedgehog("ambient");
     public static final SoundEvent ENTITY_HEDGEHOG_SCARED = hedgehog("scared");
     public static final SoundEvent ENTITY_HEDGEHOG_HURT = hedgehog("hurt");

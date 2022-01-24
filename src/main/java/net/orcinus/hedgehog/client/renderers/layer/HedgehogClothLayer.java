@@ -11,7 +11,7 @@ import net.orcinus.hedgehog.Hedgehog;
 import net.orcinus.hedgehog.client.models.HedgehogModel;
 import net.orcinus.hedgehog.client.renderers.HedgehogRenderer;
 import net.orcinus.hedgehog.entities.HedgehogEntity;
-import net.orcinus.hedgehog.init.HModelLayers;
+import net.orcinus.hedgehog.init.HedgehogModelLayers;
 
 public class HedgehogClothLayer extends FeatureRenderer<HedgehogEntity, EntityModel<HedgehogEntity>> {
     //TODO: If you're reading this, I'm sorry. I'll probably find a more efficient way in the future.
@@ -37,7 +37,7 @@ public class HedgehogClothLayer extends FeatureRenderer<HedgehogEntity, EntityMo
 
     public HedgehogClothLayer(HedgehogRenderer hedgehogRenderer, EntityModelLoader modelSet) {
         super(hedgehogRenderer);
-        this.model = new HedgehogModel<>(modelSet.getModelPart(HModelLayers.HEDGEHOG_DECOR));
+        this.model = new HedgehogModel<>(modelSet.getModelPart(HedgehogModelLayers.HEDGEHOG_DECOR));
     }
 
     @Override

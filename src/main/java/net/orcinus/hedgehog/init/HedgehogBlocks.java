@@ -13,7 +13,7 @@ import net.orcinus.hedgehog.blocks.KiwiVinesBlock;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class HBlocks {
+public class HedgehogBlocks {
     private static final Map<Identifier, Block> BLOCKS = new LinkedHashMap<>();
 
     public static final Block KIWI_VINES = registerBlock("kiwi_vines", new KiwiVinesBlock(AbstractBlock.Settings.of(Material.PLANT, MapColor.GREEN).strength(0.2F).sounds(BlockSoundGroup.CAVE_VINES).noCollision()));

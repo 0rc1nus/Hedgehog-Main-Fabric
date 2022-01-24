@@ -7,7 +7,7 @@ import net.minecraft.util.registry.Registry;
 import net.orcinus.hedgehog.Hedgehog;
 import net.orcinus.hedgehog.entities.HedgehogEntity;
 
-public class HEntities {
+public class HedgehogEntities {
 
     public static final EntityType<HedgehogEntity> HEDGEHOG = register("hedgehog", EntityType.Builder.create(HedgehogEntity::new, SpawnGroup.CREATURE).setDimensions(0.5F, 0.5F).maxTrackingRange(10));
 

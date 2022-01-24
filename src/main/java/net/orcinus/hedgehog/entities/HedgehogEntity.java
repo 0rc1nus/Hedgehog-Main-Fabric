@@ -70,9 +70,9 @@ import net.orcinus.hedgehog.entities.ai.hedgehog.HedgehogOwnerHurtByTargetGoal;
 import net.orcinus.hedgehog.entities.ai.hedgehog.HedgehogOwnerHurtTargetGoal;
 import net.orcinus.hedgehog.entities.ai.hedgehog.HedgehogPanicGoal;
 import net.orcinus.hedgehog.entities.ai.hedgehog.HedgehogRandomLookAroundGal;
-import net.orcinus.hedgehog.init.HEntities;
-import net.orcinus.hedgehog.init.HItems;
-import net.orcinus.hedgehog.init.HSoundEvents;
+import net.orcinus.hedgehog.init.HedgehogEntities;
+import net.orcinus.hedgehog.init.HedgehogItems;
+import net.orcinus.hedgehog.init.HedgehogSoundEvents;
 import net.orcinus.hedgehog.mixin.MobEntityInvoker;
 import org.jetbrains.annotations.Nullable;
 
@@ -169,29 +169,29 @@ public class HedgehogEntity extends TameableEntity implements Angerable {
 
     @Override
     public SoundEvent getEatSound(ItemStack stack) {
-        return HSoundEvents.ENTITY_HEDGEHOG_EATING;
+        return HedgehogSoundEvents.ENTITY_HEDGEHOG_EATING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
         if (this.getScaredTicks() > 0) {
-            return HSoundEvents.ENTITY_HEDGEHOG_SCARED;
+            return HedgehogSoundEvents.ENTITY_HEDGEHOG_SCARED;
         }
-        return HSoundEvents.ENTITY_HEDGEHOG_AMBIENT;
+        return HedgehogSoundEvents.ENTITY_HEDGEHOG_AMBIENT;
 
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return HSoundEvents.ENTITY_HEDGEHOG_HURT;
+        return HedgehogSoundEvents.ENTITY_HEDGEHOG_HURT;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return HSoundEvents.ENTITY_HEDGEHOG_DEATH;
+        return HedgehogSoundEvents.ENTITY_HEDGEHOG_DEATH;
     }
 
     public DyeColor getBandColor() {
@@ -457,7 +457,7 @@ public class HedgehogEntity extends TameableEntity implements Angerable {
             }
             if (this.isTamed()) {
                 if (this.isBreedingItem(stack) && this.getHealth() < this.getMaxHealth()) {
-                    if (stack.isOf(HItems.KIWI)) {
+                    if (stack.isOf(HedgehogItems.KIWI)) {
                         this.setAssistanceTicks(1200);
                     }
                     if (!player.getAbilities().creativeMode) {
@@ -501,7 +501,7 @@ public class HedgehogEntity extends TameableEntity implements Angerable {
 
                     return ActionResult.SUCCESS;
                 }
-            } else if ((stack.isOf(HItems.KIWI) || stack.isOf(Items.APPLE)) && !this.hasAngerTime() && this.getScaredTicks() == 0) {
+            } else if ((stack.isOf(HedgehogItems.KIWI) || stack.isOf(Items.APPLE)) && !this.hasAngerTime() && this.getScaredTicks() == 0) {
                 if (!player.getAbilities().creativeMode) {
                     stack.decrement(1);
                 }
@@ -555,13 +555,13 @@ public class HedgehogEntity extends TameableEntity implements Angerable {
 
     @Override
     public boolean isBreedingItem(ItemStack stack) {
-        return stack.getItem() == Items.APPLE || stack.getItem() == HItems.KIWI;
+        return stack.getItem() == Items.APPLE || stack.getItem() == HedgehogItems.KIWI;
     }
 
     @Nullable
     @Override
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
-        HedgehogEntity hedgehog = HEntities.HEDGEHOG.create(world);
+        HedgehogEntity hedgehog = HedgehogEntities.HEDGEHOG.create(world);
         UUID uuid = this.getOwnerUuid();
         if (uuid != null) {
             hedgehog.setOwnerUuid(uuid);

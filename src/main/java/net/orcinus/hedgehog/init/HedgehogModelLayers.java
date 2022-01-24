@@ -12,14 +12,14 @@ import net.orcinus.hedgehog.client.models.HedgehogScaredModel;
 import net.orcinus.hedgehog.client.renderers.HedgehogRenderer;
 
 @Environment(EnvType.CLIENT)
-public class HModelLayers {
+public class HedgehogModelLayers {
 
     public static final EntityModelLayer HEDGEHOG = new EntityModelLayer(new Identifier(Hedgehog.MODID, "hedgehog"), "main");
     public static final EntityModelLayer HEDGEHOG_SCARED = new EntityModelLayer(new Identifier(Hedgehog.MODID, "hedgehogscared"), "main");
     public static final EntityModelLayer HEDGEHOG_DECOR = new EntityModelLayer(new Identifier(Hedgehog.MODID, "hedgehog"), "decor");
 
     public static void registerRenderers() {
-        EntityRendererRegistry.register(HEntities.HEDGEHOG, HedgehogRenderer::new);
+        EntityRendererRegistry.register(HedgehogEntities.HEDGEHOG, HedgehogRenderer::new);
         EntityModelLayerRegistry.registerModelLayer(HEDGEHOG, HedgehogModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(HEDGEHOG_DECOR, HedgehogModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(HEDGEHOG_SCARED, HedgehogScaredModel::getTexturedModelData);

@@ -2,7 +2,7 @@ package net.orcinus.hedgehog.mixin;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnRestriction;
-import net.orcinus.hedgehog.init.HSpawnRestrictions;
+import net.orcinus.hedgehog.init.HedgehogSpawnRestrictions;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -19,7 +19,7 @@ public class SpawnRestrictionMixin {
 
     @Inject(at = @At("TAIL"), method = "<clinit>")
     private static void init(CallbackInfo ci) {
-        HSpawnRestrictions.init(RESTRICTIONS);
+        HedgehogSpawnRestrictions.init(RESTRICTIONS);
     }
 
 }

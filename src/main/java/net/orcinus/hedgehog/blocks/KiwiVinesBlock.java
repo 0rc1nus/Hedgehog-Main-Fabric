@@ -17,7 +17,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.orcinus.hedgehog.init.HItems;
+import net.orcinus.hedgehog.init.HedgehogItems;
 
 import java.util.Random;
 
@@ -41,7 +41,7 @@ public class KiwiVinesBlock extends AbstractLichenBlock implements Fertilizable 
             FACING_PROPERTIES.forEach((direction, bl) -> {
                 BooleanProperty booleanproperty = getProperty(direction);
                 if (state.contains(booleanproperty) && state.get(booleanproperty)) {
-                    Block.dropStack(world, pos, new ItemStack(HItems.KIWI, 1));
+                    Block.dropStack(world, pos, new ItemStack(HedgehogItems.KIWI, 1));
                 }
             });
             world.setBlockState(pos, state.with(KIWI, false), 2);

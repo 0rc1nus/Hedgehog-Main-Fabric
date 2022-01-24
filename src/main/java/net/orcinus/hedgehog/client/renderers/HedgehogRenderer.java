@@ -15,7 +15,7 @@ import net.orcinus.hedgehog.client.models.HedgehogModel;
 import net.orcinus.hedgehog.client.models.HedgehogScaredModel;
 import net.orcinus.hedgehog.client.renderers.layer.HedgehogClothLayer;
 import net.orcinus.hedgehog.entities.HedgehogEntity;
-import net.orcinus.hedgehog.init.HModelLayers;
+import net.orcinus.hedgehog.init.HedgehogModelLayers;
 
 @Environment(EnvType.CLIENT)
 public class HedgehogRenderer extends MobEntityRenderer<HedgehogEntity, EntityModel<HedgehogEntity>> {
@@ -27,8 +27,8 @@ public class HedgehogRenderer extends MobEntityRenderer<HedgehogEntity, EntityMo
     private final EntityModel<HedgehogEntity> normal = this.getModel();
 
     public HedgehogRenderer(EntityRendererFactory.Context context) {
-        super(context, new HedgehogModel<>(context.getPart(HModelLayers.HEDGEHOG)), 0.3F);
-        this.scared = new HedgehogScaredModel<>(context.getPart(HModelLayers.HEDGEHOG_SCARED));
+        super(context, new HedgehogModel<>(context.getPart(HedgehogModelLayers.HEDGEHOG)), 0.3F);
+        this.scared = new HedgehogScaredModel<>(context.getPart(HedgehogModelLayers.HEDGEHOG_SCARED));
         this.addFeature(new HedgehogClothLayer(this, context.getModelLoader()));
     }
 

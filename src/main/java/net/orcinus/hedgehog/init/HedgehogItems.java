@@ -11,11 +11,11 @@ import net.orcinus.hedgehog.Hedgehog;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class HItems {
+public class HedgehogItems {
     private static final Map<Identifier, Item> ITEMS = new LinkedHashMap<>();
 
-    public static final Item KIWI = registerItem("kiwi", (Item)new AliasedBlockItem(HBlocks.KIWI_VINES, new Item.Settings().food(HFoodComponents.KIWI).group(ItemGroup.FOOD)));
-    public static final Item HEDGEHOG_SPAWN_EGG = registerItem("hedgehog_spawn_egg", new SpawnEggItem(HEntities.HEDGEHOG, 5654847, 13352614, new Item.Settings().group(ItemGroup.MISC)));
+    public static final Item KIWI = registerItem("kiwi", (Item)new AliasedBlockItem(HedgehogBlocks.KIWI_VINES, new Item.Settings().food(HedgehogFoodComponents.KIWI).group(ItemGroup.FOOD)));
+    public static final Item HEDGEHOG_SPAWN_EGG = registerItem("hedgehog_spawn_egg", new SpawnEggItem(HedgehogEntities.HEDGEHOG, 5654847, 13352614, new Item.Settings().group(ItemGroup.MISC)));
 
     public static <I extends Item> I registerItem(String name, I item) {
         ITEMS.put(Hedgehog.ID(name), item);

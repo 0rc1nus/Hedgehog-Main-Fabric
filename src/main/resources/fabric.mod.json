@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
   "id": "orcinus",
-  "version": "${version}",
-  "name": "Orcinus",
-  "description": "This is a fabric port of the hedgehogs mod",
+  "version": "1.1.0",
+  "name": "Hedgehog",
+  "description": "This is a fabric port of the hedgehogs mod. Special Thanks To Ninni for the new revamped model and Wolf for the logo",
   "authors": [
     "Orcinus"
   ],
   "contact": {},
   "license": "MIT",
-  "icon": "assets/orcinus/icon.png",
+  "icon": "assets/hedgehog/icon.png",
   "accessWidener": "hedgehog.accesswidener",
   "environment": "*",
   "entrypoints": {
@@ -21,7 +21,7 @@
     ]
   },
   "mixins": [
-    "orcinus.mixins.json"
+    "hedgehog.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.12.12",
