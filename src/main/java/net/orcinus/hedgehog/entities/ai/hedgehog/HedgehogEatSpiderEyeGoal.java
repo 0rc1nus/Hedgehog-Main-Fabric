@@ -29,13 +29,13 @@ public class HedgehogEatSpiderEyeGoal extends Goal {
     @Override
     public boolean canStart() {
         List<ItemEntity> list = this.hedgehog.world.getEntitiesByClass(ItemEntity.class, this.hedgehog.getBoundingBox().expand(8.0D, 8.0D, 8.0D), itemEntity -> !itemEntity.cannotPickup() && itemEntity.isAlive() && itemEntity.getStack().isOf(Items.SPIDER_EYE));
-        return !list.isEmpty() && !this.hedgehog.isAnointed() && !this.hedgehog.hasPotion() && this.hedgehog.getScaredTicks() == 0;
+        return !this.hedgehog.isBaby() && !list.isEmpty() && !this.hedgehog.isAnointed() && !this.hedgehog.hasPotion() && this.hedgehog.getScaredTicks() == 0;
     }
 
     @Override
     public boolean shouldContinue() {
         List<ItemEntity> list = this.hedgehog.world.getEntitiesByClass(ItemEntity.class, this.hedgehog.getBoundingBox().expand(8.0D, 8.0D, 8.0D), itemEntity -> !itemEntity.cannotPickup() && itemEntity.isAlive() && itemEntity.getStack().isOf(Items.SPIDER_EYE));
-        return !list.isEmpty() && !this.hedgehog.isAnointed() && !this.hedgehog.hasPotion() && this.hedgehog.getScaredTicks() == 0;
+        return !this.hedgehog.isBaby() && !list.isEmpty() && !this.hedgehog.isAnointed() && !this.hedgehog.hasPotion() && this.hedgehog.getScaredTicks() == 0;
     }
 
     @Override
