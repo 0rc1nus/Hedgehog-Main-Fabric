@@ -9,15 +9,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.intprovider.ConstantIntProvider;
 import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.WorldAccess;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.DripstoneHelper;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 import net.orcinus.hedgehog.blocks.KiwiVinesBlock;
 import net.orcinus.hedgehog.init.HedgehogBlocks;
-import org.apache.commons.compress.utils.Lists;
 
-import java.util.List;
 import java.util.Random;
 
 public class HedgehogBirchTreeFeature extends Feature<DefaultFeatureConfig> {
@@ -35,12 +34,11 @@ public class HedgehogBirchTreeFeature extends Feature<DefaultFeatureConfig> {
         if (!world.getBlockState(blockPos.down()).isIn(BlockTags.DIRT)) {
             return false;
         } else {
-            List<BlockPos> vinePos = Lists.newArrayList();
             for (int i = 0; i <= height; i++) {
                 BlockPos placePos = blockPos.up(i);
                 if (world.testBlockState(placePos, state -> state.isOf(HedgehogBlocks.KIWI_VINES) || state.getMaterial().isReplaceable() || state.isAir() || state.isOf(Blocks.WATER) || state.getMaterial() == Material.PLANT)) {
                     world.setBlockState(placePos, Blocks.BIRCH_LOG.getDefaultState(), 19);
-                    vinePos.add(placePos);
+                    this.generateVines(world, random, placePos);
                 }
             }
             int radius = 1;
@@ -57,20 +55,21 @@ public class HedgehogBirchTreeFeature extends Feature<DefaultFeatureConfig> {
                     }
                 }
             }
-            for (BlockPos pos : vinePos) {
-                BlockPos.Mutable mut = pos.mutableCopy();
-                if (random.nextInt(3) == 0) {
-                    KiwiVinesFeature.generateVine(world, pos, random, 2);
-                }
-                for (Direction direction : Direction.values()) {
-                    BlockPos offset = mut.offset(direction);
-                    BlockState state = random.nextBoolean() ? HedgehogBlocks.KIWI_VINES.getDefaultState().with(KiwiVinesBlock.KIWI, true) : HedgehogBlocks.KIWI_VINES.getDefaultState();
-                    if (random.nextBoolean() && world.isAir(offset)) {
-                        world.setBlockState(offset, state.with(KiwiVinesBlock.getProperty(direction.getOpposite()), true), 2);
-                    }
-                }
-            }
             return true;
+        }
+    }
+
+    private void generateVines(WorldAccess world, Random random, BlockPos pos) {
+        BlockPos.Mutable mut = pos.mutableCopy();
+        if (random.nextInt(3) == 0) {
+            KiwiVinesFeature.generateVine(world, pos, random, 2);
+        }
+        for (Direction direction : Direction.values()) {
+            BlockPos offset = mut.offset(direction);
+            BlockState state = random.nextBoolean() ? HedgehogBlocks.KIWI_VINES.getDefaultState().with(KiwiVinesBlock.KIWI, true) : HedgehogBlocks.KIWI_VINES.getDefaultState();
+            if (random.nextBoolean() && world.isAir(offset)) {
+                world.setBlockState(offset, state.with(KiwiVinesBlock.getProperty(direction.getOpposite()), true), 2);
+            }
         }
     }
 }

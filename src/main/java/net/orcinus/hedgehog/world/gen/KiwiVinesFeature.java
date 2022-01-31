@@ -5,6 +5,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.WorldAccess;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
@@ -28,7 +29,7 @@ public class KiwiVinesFeature extends Feature<DefaultFeatureConfig> {
         return true;
     }
 
-    public static void generateVine(StructureWorldAccess world, BlockPos pos, Random random, int tries) {
+    public static void generateVine(WorldAccess world, BlockPos pos, Random random, int tries) {
         BlockPos.Mutable mut = pos.mutableCopy();
         for (Direction direction : Direction.Type.HORIZONTAL) {
             for (int i = 0; i < tries; i++) {
