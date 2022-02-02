@@ -23,6 +23,8 @@ public class HedgehogRenderer extends MobEntityRenderer<HedgehogEntity, EntityMo
     public static final Identifier SCARED_TEXTURE = new Identifier(Hedgehog.MODID, "textures/entity/scared_hedgehog.png");
     public static final Identifier SPEED_CONSUMER = new Identifier(Hedgehog.MODID, "textures/entity/speed_consumer_hedgehog.png");
     public static final Identifier SCARED_SPEED_CONSUMER = new Identifier(Hedgehog.MODID, "textures/entity/scared_speed_consumer_hedgehog.png");
+    public static final Identifier ZEFIRO = new Identifier(Hedgehog.MODID, "textures/entity/zefiro_hedgehog.png");
+    public static final Identifier SCARED_ZEFIRO = new Identifier(Hedgehog.MODID, "textures/entity/scared_zefiro_hedgehog.png");
     private final EntityModel<HedgehogEntity> scared;
     private final EntityModel<HedgehogEntity> normal = this.getModel();
 
@@ -60,6 +62,8 @@ public class HedgehogRenderer extends MobEntityRenderer<HedgehogEntity, EntityMo
         String s = Formatting.strip(entity.getName().getString());
         if ("SpeedBoy".equals(s)) {
             return entity.getScaredTicks() > 0 ? SCARED_SPEED_CONSUMER : SPEED_CONSUMER;
+        } else if ("Zefiro".equals(s)) {
+            return entity.getScaredTicks() > 0 ? SCARED_ZEFIRO : ZEFIRO;
         } else {
             return entity.getScaredTicks() > 0 ? SCARED_TEXTURE : TEXTURE;
         }
