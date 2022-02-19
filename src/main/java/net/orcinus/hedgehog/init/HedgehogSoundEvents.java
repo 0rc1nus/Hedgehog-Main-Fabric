@@ -5,22 +5,29 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.orcinus.hedgehog.Hedgehog;
 
+import java.util.LinkedHashMap;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class HedgehogSoundEvents {
-    public static final SoundEvent ENTITY_HEDGEHOG_AMBIENT = hedgehog("ambient");
-    public static final SoundEvent ENTITY_HEDGEHOG_SCARED = hedgehog("scared");
-    public static final SoundEvent ENTITY_HEDGEHOG_HURT = hedgehog("hurt");
-    public static final SoundEvent ENTITY_HEDGEHOG_DEATH = hedgehog("death");
-    public static final SoundEvent ENTITY_HEDGEHOG_EATING = hedgehog("eating");
-    private static SoundEvent hedgehog(String id) {
-        return entity("hedgehog", id);
+    private static final LinkedHashMap<Identifier, SoundEvent> SOUND_EVENTS = new LinkedHashMap<>();
+
+    public static final SoundEvent ENTITY_HEDGEHOG_AMBIENT = registerSoundEvent("entity.hedgehog.ambient");
+    public static final SoundEvent ENTITY_HEDGEHOG_SCARED = registerSoundEvent("entity.hedgehog.scared");
+    public static final SoundEvent ENTITY_HEDGEHOG_HURT = registerSoundEvent("entity.hedgehog.hurt");
+    public static final SoundEvent ENTITY_HEDGEHOG_DEATH = registerSoundEvent("entity.hedgehog.death");
+    public static final SoundEvent ENTITY_HEDGEHOG_EATING = registerSoundEvent("entity.hedgehog.eating");
+
+    public static SoundEvent registerSoundEvent(String name) {
+        Identifier identifier = new Identifier(Hedgehog.MODID, name);
+        SoundEvent soundEvent = new SoundEvent(identifier);
+        SOUND_EVENTS.put(identifier, soundEvent);
+        return soundEvent;
     }
 
-    private static SoundEvent entity(String entity, String id) {
-        return register("entity.%s.%s".formatted(entity, id));
+    public static void init() {
+        for (Identifier id : SOUND_EVENTS.keySet()) {
+            Registry.register(Registry.SOUND_EVENT, id, SOUND_EVENTS.get(id));
+        }
     }
 
-    private static SoundEvent register(String id) {
-        Identifier identifier = new Identifier(Hedgehog.MODID, id);
-        return Registry.register(Registry.SOUND_EVENT, identifier, new SoundEvent(identifier));
-    }
 }

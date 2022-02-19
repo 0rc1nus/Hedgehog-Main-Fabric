@@ -23,6 +23,7 @@ import net.orcinus.hedgehog.init.HedgehogEntities;
 import net.orcinus.hedgehog.init.HedgehogFeatures;
 import net.orcinus.hedgehog.init.HedgehogItems;
 import net.orcinus.hedgehog.init.HedgehogPlacements;
+import net.orcinus.hedgehog.init.HedgehogSoundEvents;
 
 public class Hedgehog implements ModInitializer {
     public static final String MODID = "hedgehog";
@@ -49,6 +50,7 @@ public class Hedgehog implements ModInitializer {
         HedgehogFeatures.init();
         HedgehogConfiguredFeatures.init();
         HedgehogPlacements.init();
+        HedgehogSoundEvents.init();
 
         /*
          * Registers Entity Spawnings with Fabric API
