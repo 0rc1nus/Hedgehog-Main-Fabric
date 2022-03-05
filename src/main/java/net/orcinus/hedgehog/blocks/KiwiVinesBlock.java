@@ -30,6 +30,11 @@ public class KiwiVinesBlock extends AbstractLichenBlock implements Fertilizable 
     }
 
     @Override
+    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        this.grow(world, random, pos, state);
+    }
+
+    @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder);
         builder.add(KIWI);

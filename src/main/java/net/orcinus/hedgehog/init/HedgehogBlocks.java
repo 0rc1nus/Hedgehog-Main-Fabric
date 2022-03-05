@@ -16,7 +16,7 @@ import java.util.Map;
 public class HedgehogBlocks {
     private static final Map<Identifier, Block> BLOCKS = new LinkedHashMap<>();
 
-    public static final Block KIWI_VINES = registerBlock("kiwi_vines", new KiwiVinesBlock(AbstractBlock.Settings.of(Material.PLANT, MapColor.GREEN).strength(0.2F).sounds(BlockSoundGroup.CAVE_VINES).noCollision()));
+    public static final Block KIWI_VINES = registerBlock("kiwi_vines", new KiwiVinesBlock(AbstractBlock.Settings.of(Material.PLANT, MapColor.GREEN).strength(0.2F).noCollision().ticksRandomly().sounds(BlockSoundGroup.CAVE_VINES)));
 
     private static <B extends Block> B registerBlock(String name, B block) {
         BLOCKS.put(Hedgehog.ID(name), block);

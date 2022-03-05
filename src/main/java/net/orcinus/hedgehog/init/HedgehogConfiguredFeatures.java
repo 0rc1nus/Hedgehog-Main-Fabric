@@ -2,18 +2,29 @@ package net.orcinus.hedgehog.init;
 
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.FeatureConfig;
 import net.orcinus.hedgehog.Hedgehog;
 
 public class HedgehogConfiguredFeatures {
 
-    public static final ConfiguredFeature<?, ?> FALLEN_BIRCH = HedgehogFeatures.FALLEN_BIRCH.configure(DefaultFeatureConfig.INSTANCE);
-    public static final ConfiguredFeature<?, ?> HEDGEHOG_BIRCH_TREE = HedgehogFeatures.HEDGEHOG_BIRCH_TREE.configure(DefaultFeatureConfig.INSTANCE);
+    public static final RegistryEntry<ConfiguredFeature<DefaultFeatureConfig, ?>> FALLEN_BIRCH = registerConfiguredFeature("fallen_birch", HedgehogFeatures.FALLEN_BIRCH);
+    public static final RegistryEntry<ConfiguredFeature<DefaultFeatureConfig, ?>> HEDGEHOG_BIRCH_TREE = registerConfiguredFeature("hedgehog_birch_tree", HedgehogFeatures.HEDGEHOG_BIRCH_TREE);
+
+    public static RegistryEntry<ConfiguredFeature<DefaultFeatureConfig, ?>> registerConfiguredFeature(String id, Feature<DefaultFeatureConfig> feature) {
+        return registerConfiguredFeature(id, feature, FeatureConfig.DEFAULT);
+    }
+
+    public static <FC extends FeatureConfig, F extends Feature<FC>> RegistryEntry<ConfiguredFeature<FC, ?>> registerConfiguredFeature(String id, F feature, FC config) {
+        return BuiltinRegistries.method_40360(BuiltinRegistries.CONFIGURED_FEATURE, Hedgehog.MODID + ":" + id, new ConfiguredFeature(feature, config));
+    }
 
     public static void init() {
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, Hedgehog.ID("fallen_birch"), FALLEN_BIRCH);
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, Hedgehog.ID("hedgehog_birch_tree"), HEDGEHOG_BIRCH_TREE);
+        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, Hedgehog.ID("fallen_birch"), FALLEN_BIRCH.value());
+        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, Hedgehog.ID("hedgehog_birch_tree"), HEDGEHOG_BIRCH_TREE.value());
     }
 
 }

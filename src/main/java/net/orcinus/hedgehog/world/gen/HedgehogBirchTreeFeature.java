@@ -16,7 +16,9 @@ import net.minecraft.world.gen.feature.util.DripstoneHelper;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 import net.orcinus.hedgehog.blocks.KiwiVinesBlock;
 import net.orcinus.hedgehog.init.HedgehogBlocks;
+import org.apache.commons.compress.utils.Lists;
 
+import java.util.List;
 import java.util.Random;
 
 public class HedgehogBirchTreeFeature extends Feature<DefaultFeatureConfig> {
@@ -34,11 +36,12 @@ public class HedgehogBirchTreeFeature extends Feature<DefaultFeatureConfig> {
         if (!world.getBlockState(blockPos.down()).isIn(BlockTags.DIRT)) {
             return false;
         } else {
+            List<BlockPos> vinePlacePos = Lists.newArrayList();
             for (int i = 0; i <= height; i++) {
                 BlockPos placePos = blockPos.up(i);
                 if (world.testBlockState(placePos, state -> state.isOf(HedgehogBlocks.KIWI_VINES) || state.getMaterial().isReplaceable() || state.isAir() || state.isOf(Blocks.WATER) || state.getMaterial() == Material.PLANT)) {
                     world.setBlockState(placePos, Blocks.BIRCH_LOG.getDefaultState(), 19);
-                    this.generateVines(world, random, placePos);
+                    vinePlacePos.add(placePos);
                 }
             }
             int radius = 1;
@@ -54,6 +57,9 @@ public class HedgehogBirchTreeFeature extends Feature<DefaultFeatureConfig> {
                         }
                     }
                 }
+            }
+            for (BlockPos vinePos : vinePlacePos) {
+                this.generateVines(world, random, vinePos);
             }
             return true;
         }

@@ -17,7 +17,9 @@ import net.minecraft.world.gen.feature.util.DripstoneHelper;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 import net.orcinus.hedgehog.blocks.KiwiVinesBlock;
 import net.orcinus.hedgehog.init.HedgehogBlocks;
+import org.apache.commons.compress.utils.Lists;
 
+import java.util.List;
 import java.util.Random;
 
 public class FallenBirchLogFeature extends Feature<DefaultFeatureConfig> {
@@ -37,20 +39,24 @@ public class FallenBirchLogFeature extends Feature<DefaultFeatureConfig> {
         if (!world.getBlockState(blockPos.down()).isIn(BlockTags.DIRT)) {
             return false;
         } else {
+            List<BlockPos> placePos = Lists.newArrayList();
             BlockPos.Mutable mut = blockPos.mutableCopy();
             for (int i = 0; i <= logLength; i++) {
                 if (world.getBlockState(mut.down()).getMaterial().isReplaceable() || world.testBlockState(mut.down(), DripstoneHelper::canGenerate)) {
                     mut.move(Direction.DOWN);
                     if (world.getBlockState(mut).getMaterial().isReplaceable() || world.testBlockState(mut, DripstoneHelper::canGenerate)) {
                         world.setBlockState(mut, Blocks.BIRCH_LOG.getDefaultState().with(PillarBlock.AXIS, direction.getAxis()), 2);
-                        generateVines(world, random, kiwi, mut.toImmutable());
+                        placePos.add(mut.toImmutable());
                     }
                 }
                 if (world.getBlockState(mut).getMaterial().isReplaceable() || world.testBlockState(mut, DripstoneHelper::canGenerate)) {
                     world.setBlockState(mut, Blocks.BIRCH_LOG.getDefaultState().with(PillarBlock.AXIS, direction.getAxis()), 2);
-                    generateVines(world, random, kiwi, mut.toImmutable());
+                    placePos.add(mut.toImmutable());
                 }
                 mut.move(direction);
+            }
+            for (BlockPos vinePos : placePos) {
+                generateVines(world, random, kiwi, vinePos);
             }
             return true;
         }

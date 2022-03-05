@@ -2,7 +2,6 @@ package net.orcinus.hedgehog;
 
 import com.google.common.reflect.Reflection;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.biome.v1.BiomeModification;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -12,7 +11,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.BuiltinRegistries;
-import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.gen.GenerationStep;
@@ -48,8 +46,8 @@ public class Hedgehog implements ModInitializer {
         });
 
         HedgehogFeatures.init();
-        HedgehogConfiguredFeatures.init();
-        HedgehogPlacements.init();
+//        HedgehogConfiguredFeatures.init();
+//        HedgehogPlacements.init();
         HedgehogSoundEvents.init();
 
         /*
@@ -60,8 +58,8 @@ public class Hedgehog implements ModInitializer {
         /*
          * Adds the biome features into the meadow biome
          */
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.MEADOW), GenerationStep.Feature.VEGETAL_DECORATION, BuiltinRegistries.PLACED_FEATURE.getKey(HedgehogPlacements.FALLEN_BIRCH).get());
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.MEADOW), GenerationStep.Feature.VEGETAL_DECORATION, BuiltinRegistries.PLACED_FEATURE.getKey(HedgehogPlacements.HEDGEHOG_BIRCH_TREE).get());
+        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.MEADOW), GenerationStep.Feature.VEGETAL_DECORATION, BuiltinRegistries.PLACED_FEATURE.getKey(HedgehogPlacements.FALLEN_BIRCH.value()).get());
+        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.MEADOW), GenerationStep.Feature.VEGETAL_DECORATION, BuiltinRegistries.PLACED_FEATURE.getKey(HedgehogPlacements.HEDGEHOG_BIRCH_TREE.value()).get());
 
     }
 
