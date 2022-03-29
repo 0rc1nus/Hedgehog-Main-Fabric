@@ -16,7 +16,6 @@ import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.gen.GenerationStep;
 import net.orcinus.hedgehog.entities.HedgehogEntity;
 import net.orcinus.hedgehog.init.HedgehogBlocks;
-import net.orcinus.hedgehog.init.HedgehogConfiguredFeatures;
 import net.orcinus.hedgehog.init.HedgehogEntities;
 import net.orcinus.hedgehog.init.HedgehogFeatures;
 import net.orcinus.hedgehog.init.HedgehogItems;
@@ -46,14 +45,12 @@ public class Hedgehog implements ModInitializer {
         });
 
         HedgehogFeatures.init();
-//        HedgehogConfiguredFeatures.init();
-//        HedgehogPlacements.init();
         HedgehogSoundEvents.init();
 
         /*
          * Registers Entity Spawnings with Fabric API
          */
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.MEADOW), SpawnGroup.CREATURE, HedgehogEntities.HEDGEHOG, 12, 1, 3);
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.MEADOW), SpawnGroup.CREATURE, HedgehogEntities.HEDGEHOG, 40, 3, 6);
 
         /*
          * Adds the biome features into the meadow biome

@@ -1,7 +1,6 @@
 package net.orcinus.hedgehog.init;
 
 import net.minecraft.util.registry.BuiltinRegistries;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
@@ -20,11 +19,6 @@ public class HedgehogConfiguredFeatures {
 
     public static <FC extends FeatureConfig, F extends Feature<FC>> RegistryEntry<ConfiguredFeature<FC, ?>> registerConfiguredFeature(String id, F feature, FC config) {
         return BuiltinRegistries.method_40360(BuiltinRegistries.CONFIGURED_FEATURE, Hedgehog.MODID + ":" + id, new ConfiguredFeature(feature, config));
-    }
-
-    public static void init() {
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, Hedgehog.ID("fallen_birch"), FALLEN_BIRCH.value());
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, Hedgehog.ID("hedgehog_birch_tree"), HEDGEHOG_BIRCH_TREE.value());
     }
 
 }

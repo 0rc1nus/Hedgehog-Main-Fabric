@@ -27,9 +27,4 @@ public class HedgehogPlacements {
         return register(id, registryEntry, List.of(modifiers));
     }
 
-    public static void init() {
-        Registry.register(BuiltinRegistries.PLACED_FEATURE, Hedgehog.ID("fallen_birch"), FALLEN_BIRCH.value());
-        Registry.register(BuiltinRegistries.PLACED_FEATURE, Hedgehog.ID("hedgehog_birch_tree"), HEDGEHOG_BIRCH_TREE.value());
-    }
-
 }
