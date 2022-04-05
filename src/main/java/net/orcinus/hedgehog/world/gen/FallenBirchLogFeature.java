@@ -39,24 +39,21 @@ public class FallenBirchLogFeature extends Feature<DefaultFeatureConfig> {
         if (!world.getBlockState(blockPos.down()).isIn(BlockTags.DIRT)) {
             return false;
         } else {
-            List<BlockPos> placePos = Lists.newArrayList();
             BlockPos.Mutable mut = blockPos.mutableCopy();
             for (int i = 0; i <= logLength; i++) {
+                boolean flag = world.getBlockState(mut).getMaterial().isReplaceable() || world.testBlockState(mut, state -> state.isAir() || state.isOf(Blocks.WATER) || state.isOf(HedgehogBlocks.KIWI_VINES) || state.isIn(BlockTags.FLOWERS));
                 if (world.getBlockState(mut.down()).getMaterial().isReplaceable() || world.testBlockState(mut.down(), DripstoneHelper::canGenerate)) {
                     mut.move(Direction.DOWN);
-                    if (world.getBlockState(mut).getMaterial().isReplaceable() || world.testBlockState(mut, DripstoneHelper::canGenerate)) {
+                    if (flag) {
                         world.setBlockState(mut, Blocks.BIRCH_LOG.getDefaultState().with(PillarBlock.AXIS, direction.getAxis()), 2);
-                        placePos.add(mut.toImmutable());
+                        generateVines(world, random, kiwi, mut.toImmutable());
                     }
                 }
-                if (world.getBlockState(mut).getMaterial().isReplaceable() || world.testBlockState(mut, DripstoneHelper::canGenerate)) {
+                if (flag) {
                     world.setBlockState(mut, Blocks.BIRCH_LOG.getDefaultState().with(PillarBlock.AXIS, direction.getAxis()), 2);
-                    placePos.add(mut.toImmutable());
+                    generateVines(world, random, kiwi, mut.toImmutable());
                 }
                 mut.move(direction);
-            }
-            for (BlockPos vinePos : placePos) {
-                generateVines(world, random, kiwi, vinePos);
             }
             return true;
         }

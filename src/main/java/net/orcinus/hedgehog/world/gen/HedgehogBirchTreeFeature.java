@@ -36,12 +36,11 @@ public class HedgehogBirchTreeFeature extends Feature<DefaultFeatureConfig> {
         if (!world.getBlockState(blockPos.down()).isIn(BlockTags.DIRT)) {
             return false;
         } else {
-            List<BlockPos> vinePlacePos = Lists.newArrayList();
             for (int i = 0; i <= height; i++) {
                 BlockPos placePos = blockPos.up(i);
                 if (world.testBlockState(placePos, state -> state.isOf(HedgehogBlocks.KIWI_VINES) || state.getMaterial().isReplaceable() || state.isAir() || state.isOf(Blocks.WATER) || state.getMaterial() == Material.PLANT)) {
                     world.setBlockState(placePos, Blocks.BIRCH_LOG.getDefaultState(), 19);
-                    vinePlacePos.add(placePos);
+                    this.generateVines(world, random, placePos);
                 }
             }
             int radius = 1;
@@ -57,9 +56,6 @@ public class HedgehogBirchTreeFeature extends Feature<DefaultFeatureConfig> {
                         }
                     }
                 }
-            }
-            for (BlockPos vinePos : vinePlacePos) {
-                this.generateVines(world, random, vinePos);
             }
             return true;
         }
