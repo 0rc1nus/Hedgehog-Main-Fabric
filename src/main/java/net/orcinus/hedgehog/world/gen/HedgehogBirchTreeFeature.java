@@ -36,32 +36,38 @@ public class HedgehogBirchTreeFeature extends Feature<DefaultFeatureConfig> {
         if (!world.getBlockState(blockPos.down()).isIn(BlockTags.DIRT)) {
             return false;
         } else {
-            for (int i = 0; i <= height; i++) {
-                BlockPos placePos = blockPos.up(i);
-                if (world.testBlockState(placePos, state -> state.isOf(HedgehogBlocks.KIWI_VINES) || state.getMaterial().isReplaceable() || state.isAir() || state.isOf(Blocks.WATER) || state.getMaterial() == Material.PLANT)) {
-                    world.setBlockState(placePos, Blocks.BIRCH_LOG.getDefaultState(), 19);
-                    this.generateVines(world, random, placePos);
-                }
-            }
-            int radius = 1;
-            for (int x = -radius; x <= radius; x++) {
-                for (int z = -radius; z <= radius; z++) {
-                    for (int y = -4; y <= 4; y++) {
-                        BlockPos leavePos = new BlockPos(blockPos.getX() + x, blockPos.getY() + y + height, blockPos.getZ() + z);
-                        if (0.4 * (x * x) + ((y * y) / 16.0) + 0.4 * (z * z) <= radius * radius) {
-                            if (world.testBlockState(leavePos, DripstoneHelper::canGenerate)) {
-                                BlockState state = Blocks.BIRCH_LEAVES.getDefaultState();
-                                world.setBlockState(leavePos, state, 19);
-                            }
-                        }
-                    }
-                }
-            }
+            generateTree(world, blockPos, random, height, true);
             return true;
         }
     }
 
-    private void generateVines(WorldAccess world, Random random, BlockPos pos) {
+    public static void generateTree(StructureWorldAccess world, BlockPos blockPos, Random random, int height, boolean shouldGenerateKiwis) {
+        for (int i = 0; i <= height; i++) {
+            BlockPos placePos = blockPos.up(i);
+            if (world.testBlockState(placePos, state -> state.isOf(HedgehogBlocks.KIWI_VINES) || state.getMaterial().isReplaceable() || state.isAir() || state.isOf(Blocks.WATER) || state.getMaterial() == Material.PLANT)) {
+                world.setBlockState(placePos, Blocks.BIRCH_LOG.getDefaultState(), 19);
+                if (shouldGenerateKiwis) {
+                    generateVines(world, random, placePos);
+                }
+            }
+        }
+        int radius = 1;
+        for (int x = -radius; x <= radius; x++) {
+            for (int z = -radius; z <= radius; z++) {
+                for (int y = -4; y <= 4; y++) {
+                    BlockPos leavePos = new BlockPos(blockPos.getX() + x, blockPos.getY() + y + height, blockPos.getZ() + z);
+                    if (0.4 * (x * x) + ((y * y) / 16.0) + 0.4 * (z * z) <= radius * radius) {
+                        if (world.testBlockState(leavePos, DripstoneHelper::canGenerate)) {
+                            BlockState state = Blocks.BIRCH_LEAVES.getDefaultState();
+                            world.setBlockState(leavePos, state, 19);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private static void generateVines(WorldAccess world, Random random, BlockPos pos) {
         BlockPos.Mutable mut = pos.mutableCopy();
         if (random.nextInt(3) == 0) {
             KiwiVinesFeature.generateVine(world, pos, random, 2);

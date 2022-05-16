@@ -11,6 +11,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -22,7 +23,7 @@ import net.orcinus.hedgehog.init.HedgehogItems;
 import java.util.Random;
 
 public class KiwiVinesBlock extends AbstractLichenBlock implements Fertilizable {
-    public static final BooleanProperty KIWI = BooleanProperty.of("kiwi");
+    public static final BooleanProperty KIWI = Properties.BERRIES;
 
     public KiwiVinesBlock(Settings settings) {
         super(settings);

@@ -1,6 +1,5 @@
 package net.orcinus.hedgehog.init;
 
-import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
@@ -27,9 +26,6 @@ public class HedgehogFeatures {
         for (String id : FEATURES.keySet()) {
             Registry.register(Registry.FEATURE, Hedgehog.ID(id), FEATURES.get(id));
         }
-//        Registry.register(Registry.FEATURE, Hedgehog.ID("fallen_branch"), FALLEN_BIRCH);
-//        Registry.register(Registry.FEATURE, Hedgehog.ID("hedgehog_birch_tree"), HEDGEHOG_BIRCH_TREE);
-//        Registry.register(Registry.FEATURE, Hedgehog.ID("kiwi_vines"), KIWI_VINES);
     }
 
 }
