@@ -20,7 +20,7 @@ public class HedgehogPlacements {
     public static final RegistryEntry<PlacedFeature> HEDGEHOG_BIRCH_TREE = register("hedgehog_birch_tree", HedgehogConfiguredFeatures.HEDGEHOG_BIRCH_TREE, RarityFilterPlacementModifier.of(40), SquarePlacementModifier.of(), PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP, BiomePlacementModifier.of());
 
     public static RegistryEntry<PlacedFeature> register(String id, RegistryEntry<? extends ConfiguredFeature<?, ?>> registryEntry, List<PlacementModifier> modifiers) {
-        return BuiltinRegistries.method_40360(BuiltinRegistries.PLACED_FEATURE, Hedgehog.MODID + ":" + id, new PlacedFeature(RegistryEntry.upcast(registryEntry), List.copyOf(modifiers)));
+        return BuiltinRegistries.addCasted(BuiltinRegistries.PLACED_FEATURE, Hedgehog.MODID + ":" + id, new PlacedFeature(RegistryEntry.upcast(registryEntry), List.copyOf(modifiers)));
     }
 
     public static RegistryEntry<PlacedFeature> register(String id, RegistryEntry<? extends ConfiguredFeature<?, ?>> registryEntry, PlacementModifier... modifiers) {

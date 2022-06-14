@@ -9,13 +9,13 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import net.orcinus.hedgehog.entities.HedgehogEntity;
 
 import java.util.EnumSet;
 import java.util.List;
-import java.util.Random;
 
 public class HedgehogEatSpiderEyeGoal extends Goal {
     private final HedgehogEntity hedgehog;
@@ -60,7 +60,7 @@ public class HedgehogEatSpiderEyeGoal extends Goal {
                 if (this.eatingTicks > 0) {
                     this.eatingTicks--;
                     if (!world.isClient()) {
-                        world.emitGameEvent(GameEvent.EAT, this.hedgehog.getCameraBlockPos());
+                        this.hedgehog.emitGameEvent(GameEvent.EAT);
                     }
                     if (this.eatingTicks % 5 == 0) {
                         this.hedgehog.getLookControl().lookAt(item);

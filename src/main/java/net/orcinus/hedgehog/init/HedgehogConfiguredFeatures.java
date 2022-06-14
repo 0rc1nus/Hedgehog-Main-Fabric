@@ -18,7 +18,7 @@ public class HedgehogConfiguredFeatures {
     }
 
     public static <FC extends FeatureConfig, F extends Feature<FC>> RegistryEntry<ConfiguredFeature<FC, ?>> registerConfiguredFeature(String id, F feature, FC config) {
-        return BuiltinRegistries.method_40360(BuiltinRegistries.CONFIGURED_FEATURE, Hedgehog.MODID + ":" + id, new ConfiguredFeature(feature, config));
+        return BuiltinRegistries.addCasted(BuiltinRegistries.CONFIGURED_FEATURE, Hedgehog.MODID + ":" + id, new ConfiguredFeature<>(feature, config));
     }
 
 }

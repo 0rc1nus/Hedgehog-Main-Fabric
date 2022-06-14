@@ -1,11 +1,12 @@
 {
   "schemaVersion": 1,
   "id": "orcinus",
-  "version": "1.18.2-1.1.0",
+  "version": "1.19-1.0.0",
   "name": "Hedgehog",
   "description": "This is a fabric port of the hedgehogs mod. Special Thanks To Ninni for the new revamped model and Wolf for the logo. To the very special person, I miss you",
   "authors": [
-    "Orcinus"
+    "Orcinus",
+    "Ninni"
   ],
   "contact": {},
   "license": "MIT",
@@ -24,8 +25,9 @@
     "hedgehog.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.13.3",
+    "fabricloader": ">=0.14.6",
     "fabric": "*",
-    "minecraft": "1.18.x"
+    "minecraft": "~1.19",
+    "java": ">=17"
   }
 }

@@ -1,9 +1,10 @@
 package net.orcinus.hedgehog.blocks;
 
-import net.minecraft.block.AbstractLichenBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Fertilizable;
+import net.minecraft.block.LichenGrower;
+import net.minecraft.block.MultifaceGrowthBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
@@ -16,14 +17,15 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.orcinus.hedgehog.init.HedgehogItems;
+import net.orcinus.hedgehog.mixin.MultifaceGrowthBlockAccessor;
 
-import java.util.Random;
-
-public class KiwiVinesBlock extends AbstractLichenBlock implements Fertilizable {
+public class KiwiVinesBlock extends MultifaceGrowthBlock implements Fertilizable {
     public static final BooleanProperty KIWI = Properties.BERRIES;
+    private final LichenGrower grower = new LichenGrower(this);
 
     public KiwiVinesBlock(Settings settings) {
         super(settings);
@@ -42,9 +44,14 @@ public class KiwiVinesBlock extends AbstractLichenBlock implements Fertilizable 
     }
 
     @Override
+    public LichenGrower getGrower() {
+        return this.grower;
+    }
+
+    @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (state.get(KIWI)) {
-            FACING_PROPERTIES.forEach((direction, bl) -> {
+            MultifaceGrowthBlockAccessor.getFACING_PROPERTIES().forEach((direction, bl) -> {
                 BooleanProperty booleanproperty = getProperty(direction);
                 if (state.contains(booleanproperty) && state.get(booleanproperty)) {
                     Block.dropStack(world, pos, new ItemStack(HedgehogItems.KIWI, 1));

@@ -29,9 +29,9 @@ import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.mob.GhastEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.SpiderEntity;
+import net.minecraft.entity.passive.AbstractHorseEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.FoxEntity;
-import net.minecraft.entity.passive.HorseBaseEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -50,7 +50,12 @@ import net.minecraft.potion.Potions;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.DyeColor;
+import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.TimeHelper;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
@@ -471,7 +476,7 @@ public class HedgehogEntity extends TameableEntity implements Angerable {
                     }
 
                     this.heal((float)item.getFoodComponent().getHunger());
-                    this.emitGameEvent(GameEvent.MOB_INTERACT, this.getCameraBlockPos());
+                    this.emitGameEvent(GameEvent.ENTITY_INTERACT);
                     return ActionResult.SUCCESS;
                 }
                 for (DyeColor dyeColor : ITEM_BY_DYE.keySet()) {
@@ -552,7 +557,8 @@ public class HedgehogEntity extends TameableEntity implements Angerable {
         if (status == 9) {
             if (random.nextInt(15) == 0) {
                 for (int k = 0; k < UniformIntProvider.create(1, 2).get(this.getRandom()); k++) {
-                    this.world.addParticle(ParticleTypes.SNOWFLAKE, this.getCameraBlockPos().getX() + 0.5D, (this.getCameraBlockPos().getY()) + 0.8D, this.getCameraBlockPos().getZ() + 0.5D, (MathHelper.nextBetween(random, -1.0F, 1.0F) * 0.083333336F), 0.05F, (MathHelper.nextBetween(random, -1.0F, 1.0F) * 0.083333336F));
+
+                    this.world.addParticle(ParticleTypes.SNOWFLAKE, this.getX() + 0.5D, (this.getY()) + 0.8D, this.getZ() + 0.5D, (MathHelper.nextBetween(random, -1.0F, 1.0F) * 0.083333336F), 0.05F, (MathHelper.nextBetween(random, -1.0F, 1.0F) * 0.083333336F));
                 }
             }
         }
@@ -630,7 +636,7 @@ public class HedgehogEntity extends TameableEntity implements Angerable {
                 return !hedgehog.isTamed() || hedgehog.getOwner() != owner;
             } else if (target instanceof PlayerEntity && owner instanceof PlayerEntity && !((PlayerEntity)owner).shouldDamagePlayer((PlayerEntity)target)) {
                 return false;
-            } else if (target instanceof HorseBaseEntity && ((HorseBaseEntity)target).isTame()) {
+            } else if (target instanceof AbstractHorseEntity && ((AbstractHorseEntity)target).isTame()) {
                 return false;
             } else {
                 return !(target instanceof TameableEntity) || !((TameableEntity)target).isTamed();
