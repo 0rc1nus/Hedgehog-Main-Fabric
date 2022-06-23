@@ -221,7 +221,7 @@ public class HedgehogEntity extends TameableEntity implements Angerable {
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putString("Potion", Registry.POTION.getKey(this.potion).toString());
+        nbt.putString("Potion", Registry.POTION.getId(this.potion).toString());
         nbt.putInt("EffectColor", this.getEffectColor());
         nbt.putInt("ScaredTicks", this.getScaredTicks());
         nbt.putInt("PotionTicks", this.getPotionTicks());
