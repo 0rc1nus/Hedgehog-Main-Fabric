@@ -16,15 +16,12 @@ import net.orcinus.hedgehog.client.models.HedgehogScaredModel;
 import net.orcinus.hedgehog.client.renderers.layer.HedgehogClothLayer;
 import net.orcinus.hedgehog.entities.HedgehogEntity;
 import net.orcinus.hedgehog.init.HedgehogModelLayers;
+import net.orcinus.hedgehog.util.PatreonSkinHandler;
 
 @Environment(EnvType.CLIENT)
 public class HedgehogRenderer extends MobEntityRenderer<HedgehogEntity, EntityModel<HedgehogEntity>> {
     public static final Identifier TEXTURE = new Identifier(Hedgehog.MODID, "textures/entity/hedgehog.png");
     public static final Identifier SCARED_TEXTURE = new Identifier(Hedgehog.MODID, "textures/entity/scared_hedgehog.png");
-    public static final Identifier SPEED_CONSUMER = new Identifier(Hedgehog.MODID, "textures/entity/speed_consumer_hedgehog.png");
-    public static final Identifier SCARED_SPEED_CONSUMER = new Identifier(Hedgehog.MODID, "textures/entity/scared_speed_consumer_hedgehog.png");
-    public static final Identifier ZEFIRO = new Identifier(Hedgehog.MODID, "textures/entity/zefiro_hedgehog.png");
-    public static final Identifier SCARED_ZEFIRO = new Identifier(Hedgehog.MODID, "textures/entity/scared_zefiro_hedgehog.png");
     private final EntityModel<HedgehogEntity> scared;
     private final EntityModel<HedgehogEntity> normal = this.getModel();
 
@@ -60,10 +57,8 @@ public class HedgehogRenderer extends MobEntityRenderer<HedgehogEntity, EntityMo
     @Override
     public Identifier getTexture(HedgehogEntity entity) {
         String s = Formatting.strip(entity.getName().getString());
-        if ("SpeedBoy".equals(s)) {
-            return entity.getScaredTicks() > 0 ? SCARED_SPEED_CONSUMER : SPEED_CONSUMER;
-        } else if ("Zefiro".equals(s)) {
-            return entity.getScaredTicks() > 0 ? SCARED_ZEFIRO : ZEFIRO;
+        if (PatreonSkinHandler.matchesString(s)) {
+            return entity.getScaredTicks() > 0 ? PatreonSkinHandler.getScaredTexture(s) : PatreonSkinHandler.getTexture(s);
         } else {
             return entity.getScaredTicks() > 0 ? SCARED_TEXTURE : TEXTURE;
         }
