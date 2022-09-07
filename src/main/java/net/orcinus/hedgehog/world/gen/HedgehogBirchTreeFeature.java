@@ -3,6 +3,7 @@ package net.orcinus.hedgehog.world.gen;
 import com.mojang.serialization.Codec;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.Material;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
@@ -54,8 +55,8 @@ public class HedgehogBirchTreeFeature extends Feature<DefaultFeatureConfig> {
                 for (int y = -4; y <= 4; y++) {
                     BlockPos leavePos = new BlockPos(blockPos.getX() + x, blockPos.getY() + y + height, blockPos.getZ() + z);
                     if (0.4 * (x * x) + ((y * y) / 16.0) + 0.4 * (z * z) <= radius * radius) {
-                        if (world.testBlockState(leavePos, DripstoneHelper::canGenerate)) {
-                            BlockState state = Blocks.BIRCH_LEAVES.getDefaultState();
+                        if (world.testBlockState(leavePos, state -> state.isAir() || state.isOf(Blocks.WATER) || state.isOf(HedgehogBlocks.KIWI_VINES))) {
+                            BlockState state = Blocks.BIRCH_LEAVES.getDefaultState().with(LeavesBlock.DISTANCE, 1);
                             world.setBlockState(leavePos, state, 19);
                         }
                     }
