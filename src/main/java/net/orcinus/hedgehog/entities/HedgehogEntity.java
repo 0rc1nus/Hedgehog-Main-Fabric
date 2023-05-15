@@ -151,6 +151,10 @@ public class HedgehogEntity extends TameableEntity implements Angerable {
     @Override
     public void travel(Vec3d movementInput) {
         if (this.getScaredTicks() > 0) return;
+        if (this.getScaredTicks() > 0) {
+            this.setVelocity(this.getVelocity().multiply(0, 1, 0));
+            movementInput = movementInput.multiply(0, 1, 0);
+        }
         super.travel(movementInput);
     }
 
